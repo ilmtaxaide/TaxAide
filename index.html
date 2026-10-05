@@ -278,100 +278,6 @@
   .role-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   @media (max-width: 760px) { .role-grid { grid-template-columns: 1fr; } }
 
-  /* ---------- Stylized Booking Form UI ---------- */
-  .acuity-card {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--paper-raised);
-    margin-top: 24px;
-    padding: 28px;
-  }
-  .acuity-header {
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 16px;
-    margin-bottom: 24px;
-  }
-  .acuity-header h2 {
-    font-size: 1.35rem;
-    margin-bottom: 4px;
-  }
-  .acuity-header p {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    margin: 0;
-  }
-  .booking-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  @media (max-width: 760px) { .booking-grid { grid-template-columns: 1fr; } }
-  
-  .booking-field { margin-bottom: 18px; }
-  .booking-field label {
-    display: block;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--ink-soft);
-    margin-bottom: 6px;
-  }
-  .booking-field select, 
-  .booking-field input {
-    width: 100%;
-    font-family: 'Public Sans', sans-serif;
-    font-size: 0.98rem;
-    padding: 10px 12px;
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--paper);
-    color: var(--ink);
-  }
-  .booking-field select:focus, 
-  .booking-field input:focus {
-    outline: 2.5px solid var(--focus);
-    outline-offset: 1px;
-    border-color: transparent;
-  }
-
-  .time-slots {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-top: 6px;
-  }
-  .time-slot-btn {
-    background: var(--paper);
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius);
-    padding: 8px;
-    font-family: 'Public Sans', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--ink);
-    cursor: pointer;
-    text-align: center;
-  }
-  .time-slot-btn:hover, .time-slot-btn.active {
-    border-color: var(--pine);
-    background: var(--pine-tint);
-    color: var(--pine-deep);
-  }
-
-  form.contact-form { display: grid; gap: 16px; max-width: 520px; }
-  form.contact-form label { font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); display: block; margin-bottom: 6px; }
-  form.contact-form input, form.contact-form textarea, form.contact-form select {
-    width: 100%;
-    font-family: 'Public Sans', sans-serif;
-    font-size: 0.98rem;
-    padding: 10px 12px;
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--paper);
-    color: var(--ink);
-  }
-  form.contact-form input:focus, form.contact-form textarea:focus { outline: 2.5px solid var(--focus); outline-offset: 1px; border-color: transparent; }
-  .form-note { font-size: 0.82rem; color: var(--ink-soft); }
-
   .locations-list { display: grid; gap: 14px; }
   .loc-row { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line-soft); flex-wrap: wrap; }
   .loc-row .loc-name { font-weight: 600; }
@@ -410,15 +316,13 @@
   <div class="wrap">
     <nav class="tabs" id="tabnav" aria-label="Site sections">
       <button data-page="home" aria-selected="true">Home</button>
-      <button data-page="book-embed">Book Appointment (Form)</button>
-      <button data-page="book-link">Book Appointment (Link)</button>
+      <button data-page="book-link">Book Appointment</button>
       <button data-page="documents">Documents to Bring</button>
       <button data-page="property-tax">Property Tax Relief</button>
       <button data-page="training">Volunteer Training</button>
       <button data-page="resources">Resource Library</button>
       <button data-page="volunteer">Become a Volunteer</button>
       <button data-page="locations">Other Locations</button>
-      <button data-page="contact">Contact Us Form</button>
       <button data-page="contact-simple">Contact Us</button>
     </nav>
   </div>
@@ -433,7 +337,7 @@
         <h1>Your taxes, prepared for free by someone who lives nearby.</h1>
         <p class="lede">Every season, IRS-certified volunteers across the Cape Fear region prepare federal and state returns at no cost — no upsells, no fine print, no fee taken from your refund.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#book-embed" data-page-link="book-embed">Book an appointment</a>
+          <a class="btn btn-primary" href="#book-link" data-page-link="book-link">Book an appointment</a>
           <a class="btn btn-ghost" href="#documents" data-page-link="documents">See what to bring</a>
         </div>
       </div>
@@ -500,78 +404,6 @@
         <p>A volunteer will tell you at intake if your return falls outside what the program can prepare — for example, rental property with depreciation, or a complex small business. In that case they'll explain why and point you toward a paid preparer or the IRS's own guidance.</p>
       </details>
     </section>
-  </section>
-
-  <!-- BOOKING - EMBEDDED / STYLIZED FORM -->
-  <section class="page" id="page-book-embed">
-    <h1>Schedule an Appointment</h1>
-    <p class="lede">Choose an available location, date, and time slot below to schedule your free tax preparation appointment.</p>
-    
-    <div class="acuity-card">
-      <div class="acuity-header">
-        <h2>Cape Fear Tax Aide Scheduler</h2>
-        <p>Powered by Acuity Scheduling</p>
-      </div>
-
-      <form onsubmit="alert('Appointment booked successfully!'); return false;">
-        <div class="booking-grid">
-          <div>
-            <div class="booking-field">
-              <label for="service-select">Select Service</label>
-              <select id="service-select">
-                <option>Standard Federal &amp; State Tax Preparation (1 Hour)</option>
-                <option>Property Tax Relief Application Assistance (30 Min)</option>
-              </select>
-            </div>
-
-            <div class="booking-field">
-              <label for="location-select">Select Location</label>
-              <select id="location-select">
-                <option>Wilmington Downtown Library</option>
-                <option>New Hanover County Senior Center</option>
-                <option>Cape Fear Community Center</option>
-              </select>
-            </div>
-
-            <div class="booking-field">
-              <label for="date-select">Select Date</label>
-              <input type="date" id="date-select" value="2026-02-10">
-            </div>
-
-            <div class="booking-field">
-              <label>Available Time Slots</label>
-              <div class="time-slots">
-                <button type="button" class="time-slot-btn active">9:00 AM</button>
-                <button type="button" class="time-slot-btn">10:15 AM</button>
-                <button type="button" class="time-slot-btn">11:30 AM</button>
-                <button type="button" class="time-slot-btn">1:30 PM</button>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="booking-field">
-              <label for="book-name">Full Name</label>
-              <input type="text" id="book-name" placeholder="First and Last Name" required>
-            </div>
-
-            <div class="booking-field">
-              <label for="book-email">Email Address</label>
-              <input type="email" id="book-email" placeholder="you@example.com" required>
-            </div>
-
-            <div class="booking-field">
-              <label for="book-phone">Phone Number</label>
-              <input type="tel" id="book-phone" placeholder="(910) 000-0000" required>
-            </div>
-
-            <div style="margin-top: 24px;">
-              <button class="btn btn-primary" type="submit" style="width: 100%;">Confirm Appointment</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
   </section>
 
   <!-- BOOKING - DIRECT LINK -->
@@ -827,7 +659,7 @@
       </div>
     </section>
 
-    <a class="btn btn-primary" href="#contact" data-page-link="contact">Ask about volunteering</a>
+    <a class="btn btn-primary" href="#contact-simple" data-page-link="contact-simple">Ask about volunteering</a>
   </section>
 
   <!-- LOCATIONS -->
@@ -848,51 +680,6 @@
         <div class="loc-row"><span class="loc-name">Cape Fear Community Center</span><span class="loc-meta">Wednesdays, appointment strongly recommended</span></div>
       </div>
     </section>
-  </section>
-
-  <!-- CONTACT FORM -->
-  <section class="page" id="page-contact">
-    <h1>Contact us</h1>
-    <p class="lede">Appointments are booked online once the season opens. Outside of booking, this is the best way to reach the coordinating team.</p>
-
-    <div class="two-col">
-      <section class="block">
-        <h2>Send a message</h2>
-        <form class="contact-form" onsubmit="return false;">
-          <div>
-            <label for="cf-name">Name</label>
-            <input id="cf-name" type="text" placeholder="Jane Doe">
-          </div>
-          <div>
-            <label for="cf-email">Email</label>
-            <input id="cf-email" type="email" placeholder="you@example.com">
-          </div>
-          <div>
-            <label for="cf-topic">What's this about?</label>
-            <select id="cf-topic">
-              <option>Booking an appointment</option>
-              <option>Volunteering</option>
-              <option>Property tax relief question</option>
-              <option>Something else</option>
-            </select>
-          </div>
-          <div>
-            <label for="cf-msg">Message</label>
-            <textarea id="cf-msg" rows="4" placeholder="How can we help?"></textarea>
-          </div>
-          <button class="btn btn-primary" type="submit">Send message</button>
-          <p class="form-note">This form is a placeholder — wire it to your booking system or a real inbox before publishing. <span class="placeholder-tag">not live</span></p>
-        </form>
-      </section>
-
-      <section class="block">
-        <h2>Direct contact <span class="placeholder-tag">placeholder</span></h2>
-        <p><strong>Phone:</strong> (000) 000-0000</p>
-        <p><strong>Email:</strong> info@example.org</p>
-        <p><strong>Mailing address:</strong><br>123 Community Way<br>Wilmington, NC 28401</p>
-        <p style="color: var(--ink-soft); font-size: 0.88rem;">Replace these with your organization's real details — they're left as placeholders so nothing incorrect gets published by mistake.</p>
-      </section>
-    </div>
   </section>
 
   <!-- CONTACT SIMPLE -->
@@ -953,15 +740,6 @@
     }
 
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    /* Interactive Time Slot Picker for Booking Form */
-    var timeSlotBtns = document.querySelectorAll('.time-slot-btn');
-    timeSlotBtns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        timeSlotBtns.forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-      });
-    });
   })();
 </script>
 
