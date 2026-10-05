@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cape Fear Tax Aide — Free Tax Preparation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --paper-raised: #F4F7FA;
+    --ink: #0F172A;
+    --ink-soft: #475569;
+    --pine: #1E40AF;
+    --pine-deep: #1E3A8A;
+    --pine-tint: #EFF6FF;
+    --gold: #2563EB;
+    --gold-bright: #3B82F6;
+    --line: #CBD5E1;
+    --line-soft: #E2E8F0;
+    --focus: #2563EB;
+    --radius: 3px;
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F172A;
+    --paper-raised: #1E293B;
+    --ink: #F8FAFC;
+    --ink-soft: #94A3B8;
+    --pine: #60A5FA;
+    --pine-deep: #93C5FD;
+    --pine-tint: #1E293B;
+    --gold: #38BDF8;
+    --gold-bright: #60A5FA;
+    --line: #334155;
+    --line-soft: #1E293B;
+    --focus: #60A5FA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0F172A;
+      --paper-raised: #1E293B;
+      --ink: #F8FAFC;
+      --ink-soft: #94A3B8;
+      --pine: #60A5FA;
+      --pine-deep: #93C5FD;
+      --pine-tint: #1E293B;
+      --gold: #38BDF8;
+      --gold-bright: #60A5FA;
+      --line: #334155;
+      --line-soft: #1E293B;
+      --focus: #60A5FA;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.15;
+    margin: 0;
+  }
+  a { color: var(--pine-deep); }
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2.5px solid var(--focus);
+    outline-offset: 2px;
+  }
+  img { max-width: 100%; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+  @media (max-width: 640px) { .wrap { padding: 0 18px; } }
+
+  /* ---------- Header / Nav ---------- */
+  header.site {
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .brandbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0 16px;
+    gap: 16px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .brand .mark {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 700;
+    font-size: 1.55rem;
+    letter-spacing: -0.01em;
+  }
+  .brand .mark .thin { color: var(--pine-deep); font-weight: 500; }
+  .tagline {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    max-width: 220px;
+    text-align: right;
+    display: none;
+  }
+  @media (min-width: 760px) { .tagline { display: block; } }
+
+  nav.tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    padding-bottom: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav.tabs::-webkit-scrollbar { display: none; }
+  nav.tabs button {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: none;
+    padding: 10px 14px 11px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    top: 1px;
+  }
+  nav.tabs button:hover { color: var(--pine-deep); }
+  nav.tabs button[aria-selected="true"] {
+    color: var(--pine-deep);
+    background: var(--paper-raised);
+    border-color: var(--line);
+    border-bottom: 2px solid var(--paper-raised);
+  }
+
+  main { min-height: 60vh; }
+  .page { display: none; padding: 44px 0 72px; }
+  .page.active { display: block; }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+  }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+  .hero h1 { font-size: clamp(2rem, 4.4vw, 2.9rem); }
+  .hero p.lede {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin-top: 16px;
+  }
+  .hero-actions { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-block;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    padding: 12px 22px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--pine); color: #fff; border-color: var(--pine); }
+  .btn-primary:hover { background: var(--pine-deep); }
+  .btn-ghost { background: transparent; color: var(--pine-deep); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--pine-deep); }
+
+  .stamp {
+    justify-self: end;
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 4/3;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper-raised);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .stamp .stamp-row { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px dashed var(--line-soft); }
+  .stamp .stamp-row:last-child { border-bottom: none; }
+  .stamp .stamp-label { font-size: 0.82rem; color: var(--ink-soft); }
+  .stamp .stamp-value { font-family: 'Source Serif 4', serif; font-weight: 600; font-size: 1.02rem; }
+
+  section.block { margin-bottom: 44px; }
+  section.block h2 { font-size: 1.55rem; margin-bottom: 6px; }
+  section.block > .sub { color: var(--ink-soft); margin-bottom: 22px; max-width: 60ch; }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+  .step { border-top: 2px solid var(--pine); padding-top: 14px; }
+  .step .num { font-family: 'Source Serif 4', serif; font-size: 1.5rem; color: var(--pine-deep); font-weight: 600; }
+  .step h3 { font-size: 1.08rem; margin: 6px 0 8px; }
+  .step p { color: var(--ink-soft); font-size: 0.95rem; margin: 0; }
+
+  .quicklinks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 700px) { .quicklinks { grid-template-columns: 1fr; } }
+  .quicklinks a {
+    background: var(--paper-raised);
+    padding: 22px;
+    text-decoration: none;
+    color: var(--ink);
+    display: block;
+  }
+  .quicklinks a:hover { background: var(--pine-tint); }
+  .quicklinks .ql-title { font-family: 'Source Serif 4', serif; font-weight: 600; font-size: 1.05rem; color: var(--pine-deep); }
+  .quicklinks .ql-desc { color: var(--ink-soft); font-size: 0.9rem; margin-top: 6px; }
+
+  table.doclist { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  table.doclist th, table.doclist td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  table.doclist th { font-size: 0.82rem; color: var(--ink-soft); font-weight: 600; border-bottom: 1px solid var(--line); }
+  table.doclist td.cat { font-weight: 600; color: var(--pine-deep); white-space: nowrap; width: 26%; }
+  .overflow-x { overflow-x: auto; }
+
+  .callout {
+    border-left: 3px solid var(--gold-bright);
+    background: var(--paper-raised);
+    padding: 16px 20px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 22px 0;
+  }
+  .callout p { margin: 0; }
+  .callout strong { color: var(--gold); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 760px) { .two-col { grid-template-columns: 1fr; } }
+
+  .program {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    background: var(--paper-raised);
+  }
+  .program h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .program .who { font-size: 0.85rem; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
+  .program p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+
+  .faq-item { border-bottom: 1px solid var(--line-soft); padding: 16px 0; }
+  .faq-item summary { cursor: pointer; font-weight: 600; font-family: 'Source Serif 4', serif; font-size: 1.02rem; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; font-family: sans-serif; color: var(--pine-deep); font-size: 1.2rem; flex-shrink: 0; }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-item p { color: var(--ink-soft); margin: 10px 0 0; max-width: 62ch; }
+
+  .role-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; background: var(--paper-raised); }
+  .role-card h3 { font-size: 1.1rem; }
+  .role-card ul { margin: 10px 0 0; padding-left: 20px; color: var(--ink-soft); font-size: 0.94rem; }
+  .role-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .role-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- Stylized Booking Form UI ---------- */
+  .acuity-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper-raised);
+    margin-top: 24px;
+    padding: 28px;
+  }
+  .acuity-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .acuity-header h2 {
+    font-size: 1.35rem;
+    margin-bottom: 4px;
+  }
+  .acuity-header p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 760px) { .booking-grid { grid-template-columns: 1fr; } }
+  
+  .booking-field { margin-bottom: 18px; }
+  .booking-field label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .booking-field select, 
+  .booking-field input {
+    width: 100%;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 0.98rem;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .booking-field select:focus, 
+  .booking-field input:focus {
+    outline: 2.5px solid var(--focus);
+    outline-offset: 1px;
+    border-color: transparent;
+  }
+
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .time-slot-btn {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 8px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: center;
+  }
+  .time-slot-btn:hover, .time-slot-btn.active {
+    border-color: var(--pine);
+    background: var(--pine-tint);
+    color: var(--pine-deep);
+  }
+
+  form.contact-form { display: grid; gap: 16px; max-width: 520px; }
+  form.contact-form label { font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); display: block; margin-bottom: 6px; }
+  form.contact-form input, form.contact-form textarea, form.contact-form select {
+    width: 100%;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 0.98rem;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  form.contact-form input:focus, form.contact-form textarea:focus { outline: 2.5px solid var(--focus); outline-offset: 1px; border-color: transparent; }
+  .form-note { font-size: 0.82rem; color: var(--ink-soft); }
+
+  .locations-list { display: grid; gap: 14px; }
+  .loc-row { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line-soft); flex-wrap: wrap; }
+  .loc-row .loc-name { font-weight: 600; }
+  .loc-row .loc-meta { color: var(--ink-soft); font-size: 0.9rem; }
+
+  footer.site {
+    border-top: 1px solid var(--line);
+    padding: 34px 0 40px;
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+  }
+  footer.site .foot-grid { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  footer.site a { color: var(--ink-soft); text-decoration: underline; }
+  .placeholder-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    padding: 1px 6px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap brandbar">
+    <div class="brand">
+      <span class="mark">Cape Fear <span class="thin">Tax Aide</span></span>
+    </div>
+    <div class="tagline">Free tax preparation, done by trained neighbors — not a company.</div>
+  </div>
+  <div class="wrap">
+    <nav class="tabs" id="tabnav" aria-label="Site sections">
+      <button data-page="home" aria-selected="true">Home</button>
+      <button data-page="book-embed">Book Appointment (Form)</button>
+      <button data-page="book-link">Book Appointment (Link)</button>
+      <button data-page="documents">Documents to Bring</button>
+      <button data-page="property-tax">Property Tax Relief</button>
+      <button data-page="training">Volunteer Training</button>
+      <button data-page="resources">Resource Library</button>
+      <button data-page="volunteer">Become a Volunteer</button>
+      <button data-page="locations">Other Locations</button>
+      <button data-page="contact">Contact Us Form</button>
+      <button data-page="contact-simple">Contact Us</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HOME -->
+  <section class="page active" id="page-home">
+    <div class="hero">
+      <div>
+        <h1>Your taxes, prepared for free by someone who lives nearby.</h1>
+        <p class="lede">Every season, IRS-certified volunteers across the Cape Fear region prepare federal and state returns at no cost — no upsells, no fine print, no fee taken from your refund.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#book-embed" data-page-link="book-embed">Book an appointment</a>
+          <a class="btn btn-ghost" href="#documents" data-page-link="documents">See what to bring</a>
+        </div>
+      </div>
+      <div class="stamp" aria-hidden="true">
+        <div class="stamp-row"><span class="stamp-label">Cost</span><span class="stamp-value">$0</span></div>
+        <div class="stamp-row"><span class="stamp-label">Who it's for</span><span class="stamp-value">Any income, any age</span></div>
+        <div class="stamp-row"><span class="stamp-label">Preparers</span><span class="stamp-value">IRS-certified volunteers</span></div>
+        <div class="stamp-row"><span class="stamp-label">Filing</span><span class="stamp-value">E-filed, federal &amp; NC</span></div>
+      </div>
+    </div>
+
+    <section class="block">
+      <h2>How an appointment works</h2>
+      <p class="sub">Most visits take under an hour once you're in the chair. Here's the shape of it.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Book a time online</h3>
+          <p>Pick a site and slot that works for you. Appointments open in early January and fill up fastest in February.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Bring your documents</h3>
+          <p>Arrive with ID, Social Security cards, and this year's income statements. The full checklist is one tab over.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Review and sign</h3>
+          <p>A second volunteer quality-reviews every return before it's e-filed, and you get a copy to keep.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Where to go next</h2>
+      <div class="quicklinks">
+        <a href="#documents" data-page-link="documents">
+          <div class="ql-title">Required documents</div>
+          <div class="ql-desc">The exact papers to bring so your visit isn't turned away.</div>
+        </a>
+        <a href="#property-tax" data-page-link="property-tax">
+          <div class="ql-title">Property tax relief</div>
+          <div class="ql-desc">Programs that can lower a homeowner's tax bill, explained plainly.</div>
+        </a>
+        <a href="#volunteer" data-page-link="volunteer">
+          <div class="ql-title">Become a volunteer</div>
+          <div class="ql-desc">No accounting background required — training is provided.</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>A few things people ask before their first visit</h2>
+      <details class="faq-item" open>
+        <summary>Is this really free, no strings attached?</summary>
+        <p>Yes. No fee is charged for preparation or e-filing, and nothing is deducted from a refund. The program is funded by donations and run by volunteers, not a tax-prep business.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need to be a certain age or income level?</summary>
+        <p>No. While many visitors are older adults or moderate-income households, help is open to taxpayers of any age whose return falls within the program's scope — mainly wage income, retirement income, and common credits rather than complex business or investment returns.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if my return is too complicated for this program?</summary>
+        <p>A volunteer will tell you at intake if your return falls outside what the program can prepare — for example, rental property with depreciation, or a complex small business. In that case they'll explain why and point you toward a paid preparer or the IRS's own guidance.</p>
+      </details>
+    </section>
+  </section>
+
+  <!-- BOOKING - EMBEDDED / STYLIZED FORM -->
+  <section class="page" id="page-book-embed">
+    <h1>Schedule an Appointment</h1>
+    <p class="lede">Choose an available location, date, and time slot below to schedule your free tax preparation appointment.</p>
+    
+    <div class="acuity-card">
+      <div class="acuity-header">
+        <h2>Cape Fear Tax Aide Scheduler</h2>
+        <p>Powered by Acuity Scheduling</p>
+      </div>
+
+      <form onsubmit="alert('Appointment booked successfully!'); return false;">
+        <div class="booking-grid">
+          <div>
+            <div class="booking-field">
+              <label for="service-select">Select Service</label>
+              <select id="service-select">
+                <option>Standard Federal &amp; State Tax Preparation (1 Hour)</option>
+                <option>Property Tax Relief Application Assistance (30 Min)</option>
+              </select>
+            </div>
+
+            <div class="booking-field">
+              <label for="location-select">Select Location</label>
+              <select id="location-select">
+                <option>Wilmington Downtown Library</option>
+                <option>New Hanover County Senior Center</option>
+                <option>Cape Fear Community Center</option>
+              </select>
+            </div>
+
+            <div class="booking-field">
+              <label for="date-select">Select Date</label>
+              <input type="date" id="date-select" value="2026-02-10">
+            </div>
+
+            <div class="booking-field">
+              <label>Available Time Slots</label>
+              <div class="time-slots">
+                <button type="button" class="time-slot-btn active">9:00 AM</button>
+                <button type="button" class="time-slot-btn">10:15 AM</button>
+                <button type="button" class="time-slot-btn">11:30 AM</button>
+                <button type="button" class="time-slot-btn">1:30 PM</button>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="booking-field">
+              <label for="book-name">Full Name</label>
+              <input type="text" id="book-name" placeholder="First and Last Name" required>
+            </div>
+
+            <div class="booking-field">
+              <label for="book-email">Email Address</label>
+              <input type="email" id="book-email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="booking-field">
+              <label for="book-phone">Phone Number</label>
+              <input type="tel" id="book-phone" placeholder="(910) 000-0000" required>
+            </div>
+
+            <div style="margin-top: 24px;">
+              <button class="btn btn-primary" type="submit" style="width: 100%;">Confirm Appointment</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- BOOKING - DIRECT LINK -->
+  <section class="page" id="page-book-link">
+    <h1>Book Your Tax Help Session</h1>
+    <p class="lede">Click the button below to open our official Acuity Scheduling page in a new window and choose your time slot.</p>
+
+    <div class="callout" style="margin-top: 28px;">
+      <p><strong>Note:</strong> You will be directed to our secure Acuity Scheduling page to pick a location and time.</p>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <a class="btn btn-primary" href="https://capefeartaxaide.acuityscheduling.com" target="_blank" rel="noopener noreferrer">Go to Acuity Scheduling Page &rarr;</a>
+    </div>
+  </section>
+
+  <!-- DOCUMENTS -->
+  <section class="page" id="page-documents">
+    <h1>What to bring to your appointment</h1>
+    <p class="lede">A volunteer can only prepare the parts of your return they have paperwork for. Missing a document is the single biggest reason a visit has to be rescheduled — so it's worth five minutes to check this list before you leave the house.</p>
+
+    <div class="callout">
+      <p><strong>Bring the actual documents, not photos on your phone if you can help it.</strong> Volunteers need to read small print on forms like 1099s, and a screen glare makes that harder than it should be.</p>
+    </div>
+
+    <section class="block">
+      <h2>Always required</h2>
+      <div class="overflow-x">
+      <table class="doclist">
+        <tr><th>Category</th><th>What to bring</th></tr>
+        <tr><td class="cat">Identification</td><td>A government-issued photo ID for you, and for your spouse if you're filing jointly.</td></tr>
+        <tr><td class="cat">Social Security</td><td>Social Security cards (or ITIN letters) for yourself, your spouse, and every dependent on the return.</td></tr>
+        <tr><td class="cat">Last year's return</td><td>A copy of last year's federal and state return, if you have one — new clients especially should bring this.</td></tr>
+        <tr><td class="cat">Banking</td><td>A voided check or your account and routing numbers, if you want a refund direct-deposited.</td></tr>
+      </table>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Bring whichever of these apply to you</h2>
+      <div class="overflow-x">
+      <table class="doclist">
+        <tr><th>Category</th><th>Forms and records</th></tr>
+        <tr><td class="cat">Employment income</td><td>W-2s from every employer you worked for during the year.</td></tr>
+        <tr><td class="cat">Retirement &amp; benefits</td><td>SSA-1099 (Social Security), 1099-R (pension, IRA, or annuity distributions).</td></tr>
+        <tr><td class="cat">Investment income</td><td>1099-INT, 1099-DIV, and 1099-B statements, along with purchase-price records for anything sold.</td></tr>
+        <tr><td class="cat">Other income</td><td>1099-G (unemployment or a state refund), 1099-NEC or 1099-K for gig or freelance work, and any income received in cash.</td></tr>
+        <tr><td class="cat">Health coverage</td><td>Form 1095-A if you bought marketplace insurance.</td></tr>
+        <tr><td class="cat">Education</td><td>Form 1098-T for tuition paid, and records of student loan interest (1098-E).</td></tr>
+        <tr><td class="cat">Homeownership</td><td>Form 1098 for mortgage interest, plus property tax records if you plan to itemize.</td></tr>
+        <tr><td class="cat">Dependent care</td><td>The amount paid plus the provider's name, address, and tax ID.</td></tr>
+        <tr><td class="cat">Charitable giving</td><td>Receipts or a written summary if you plan to itemize deductions.</td></tr>
+      </table>
+      </div>
+    </section>
+
+    <div class="callout">
+      <p>Not sure if a document applies to you? Bring it anyway — a volunteer can tell you it's not needed in seconds. It's much harder to fix a return after the fact than to hand over one extra envelope.</p>
+    </div>
+  </section>
+
+  <!-- PROPERTY TAX -->
+  <section class="page" id="page-property-tax">
+    <h1>Property tax relief for homeowners</h1>
+    <p class="lede">North Carolina runs a few separate programs that reduce the property tax bill for qualifying homeowners. They're easy to miss because none of them apply automatically — you have to file an application with your county.</p>
+
+    <section class="block">
+      <div class="two-col">
+        <div class="program">
+          <h3>Elderly / Disabled Exclusion</h3>
+          <div class="who">Age 65+ or totally &amp; permanently disabled</div>
+          <p>Excludes the greater of $25,000 or 50% of your home's assessed value from taxation, for homeowners under an income ceiling that's set and updated by the state each year.</p>
+        </div>
+        <div class="program">
+          <h3>Circuit Breaker Tax Deferment</h3>
+          <div class="who">Age 65+ or disabled, owned home 5+ years</div>
+          <p>Caps your property tax at a percentage of income; the deferred balance becomes a lien and is only due if the home is sold or the owner no longer qualifies.</p>
+        </div>
+        <div class="program">
+          <h3>Disabled Veteran Exclusion</h3>
+          <div class="who">Veterans with a qualifying service-connected disability</div>
+          <p>Excludes up to $45,000 of assessed value from property tax, regardless of income, for a permanent residence owned by an honorably discharged disabled veteran or their surviving spouse.</p>
+        </div>
+        <div class="program">
+          <h3>Circuit Breaker for Renters</h3>
+          <div class="who">Varies by county pilot programs</div>
+          <p>Some NC counties separately offer relief tied to rent paid, recognizing that landlords pass property tax through to tenants. Ask your county tax office if one is active locally.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>How to apply</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Get the form</h3>
+          <p>Your county tax office publishes the AV-9 application on its website, or a volunteer can print one for you at your appointment.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Gather proof of income</h3>
+          <p>You'll need last year's total household income — Social Security, pensions, and any other income all count toward the limit.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>File by June 1</h3>
+          <p>Applications are due to your county tax assessor by June 1 each year; once approved, most exclusions renew automatically.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="callout">
+      <p><strong>A volunteer can walk through eligibility with you</strong> during a regular tax appointment, but the application itself is filed separately with your county tax office — not with your tax return.</p>
+    </div>
+  </section>
+
+  <!-- TRAINING -->
+  <section class="page" id="page-training">
+    <h1>Volunteer training &amp; certification</h1>
+    <p class="lede">Every preparer here passes an IRS certification exam before touching a real return, and recertifies every single year as tax law changes. You don't need an accounting degree — you need patience and about twenty hours in December and January.</p>
+
+    <section class="block">
+      <h2>The certification path</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Self-study modules</h3>
+          <p>Work through IRS Link &amp; Learn training online, at your own pace, covering the returns this program actually handles.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Practice returns</h3>
+          <p>Local class sessions walk through realistic sample returns using the same software you'll use at your first real appointment.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Certification test</h3>
+          <p>An open-book exam confirms you can apply what you learned — most volunteers pass on the first try after the practice sessions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Certification levels</h2>
+      <p class="sub">You can stop at Basic and still be useful — many of the busiest days need people at every level.</p>
+      <div class="two-col">
+        <div class="program">
+          <h3>Basic</h3>
+          <div class="who">Entry level</div>
+          <p>Covers wages, standard deduction, common credits like Earned Income Tax Credit and Child Tax Credit — the majority of returns prepared here.</p>
+        </div>
+        <div class="program">
+          <h3>Advanced</h3>
+          <div class="who">Most volunteers work toward this</div>
+          <p>Adds retirement income, capital gains, self-employment, and itemized deductions — required to prepare or review most returns unsupervised.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="callout">
+      <p>Returning volunteers recertify each year with a shorter refresher course, since the certification only covers one tax year at a time.</p>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="page" id="page-resources">
+    <h1>Resource library</h1>
+    <p class="lede">A few reference materials people ask for outside of an actual appointment — none of these require a visit to use.</p>
+
+    <section class="block">
+      <h2>Reference sheets</h2>
+      <div class="quicklinks">
+        <a href="#documents" data-page-link="documents">
+          <div class="ql-title">Full document checklist</div>
+          <div class="ql-desc">The same list preparers use, in printable form.</div>
+        </a>
+        <a href="#" onclick="return false;">
+          <div class="ql-title">Standard deduction amounts <span class="placeholder-tag">link TBD</span></div>
+          <div class="ql-desc">Current-year figures by filing status.</div>
+        </a>
+        <a href="#" onclick="return false;">
+          <div class="ql-title">Credit &amp; deduction scope chart <span class="placeholder-tag">link TBD</span></div>
+          <div class="ql-desc">What this program can and can't prepare, at a glance.</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Outside organizations</h2>
+      <p class="sub">These sites are run independently and aren't operated by this program, but volunteers point people to them often.</p>
+      <div class="locations-list">
+        <div class="loc-row"><span class="loc-name">IRS Free File &amp; forms</span><span class="loc-meta">irs.gov — official federal forms and instructions</span></div>
+        <div class="loc-row"><span class="loc-name">NC Department of Revenue</span><span class="loc-meta">ncdor.gov — state forms, refund status, and property tax rules</span></div>
+        <div class="loc-row"><span class="loc-name">Legal Aid of North Carolina</span><span class="loc-meta">For tax disputes and issues beyond return preparation</span></div>
+      </div>
+    </section>
+  </section>
+
+  <!-- VOLUNTEER -->
+  <section class="page" id="page-volunteer">
+    <h1>Become a volunteer</h1>
+    <p class="lede">The program runs entirely on volunteers — there's no professional tax background required for most roles, and training is provided before the season starts.</p>
+
+    <section class="block">
+      <h2>Roles that need people</h2>
+      <div class="role-grid">
+        <div class="role-card">
+          <h3>Tax preparer</h3>
+          <ul>
+            <li>Completes IRS certification each fall</li>
+            <li>Meets one-on-one with taxpayers</li>
+            <li>~1 shift per week, Jan–Apr</li>
+          </ul>
+        </div>
+        <div class="role-card">
+          <h3>Client facilitator</h3>
+          <ul>
+            <li>Greets visitors and checks appointments</li>
+            <li>Confirms documents before intake</li>
+            <li>No tax certification required</li>
+          </ul>
+        </div>
+        <div class="role-card">
+          <h3>Quality reviewer</h3>
+          <ul>
+            <li>Requires Advanced certification</li>
+            <li>Double-checks every return before filing</li>
+            <li>A good fit for detail-oriented volunteers</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>What it takes to start</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Apply online</h3>
+          <p>Tell us which role interests you and which weekdays you're generally free during tax season.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Attend training</h3>
+          <p>Preparer training runs in December; facilitator training is a single short session, usually in January.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Pick your shifts</h3>
+          <p>Most volunteers commit to one shift a week from early February through mid-April.</p>
+        </div>
+      </div>
+    </section>
+
+    <a class="btn btn-primary" href="#contact" data-page-link="contact">Ask about volunteering</a>
+  </section>
+
+  <!-- LOCATIONS -->
+  <section class="page" id="page-locations">
+    <h1>Find another Tax-Aide site</h1>
+    <p class="lede">If our schedule doesn't line up with yours, this kind of free tax help runs at hundreds of sites across the country during the season — most people can find one closer to home or work.</p>
+
+    <div class="callout">
+      <p>The national site locator is the most current source — local hours change more often than any list we could keep updated here.</p>
+    </div>
+
+    <section class="block">
+      <h2>Nearby options <span class="placeholder-tag">sample data</span></h2>
+      <p class="sub">Placeholder entries — swap these for the real partner sites once you have them.</p>
+      <div class="locations-list">
+        <div class="loc-row"><span class="loc-name">New Hanover County Senior Center</span><span class="loc-meta">Tuesdays &amp; Thursdays, by appointment</span></div>
+        <div class="loc-row"><span class="loc-name">Wilmington Downtown Library</span><span class="loc-meta">Weekday mornings, walk-ins accepted before 11am</span></div>
+        <div class="loc-row"><span class="loc-name">Cape Fear Community Center</span><span class="loc-meta">Wednesdays, appointment strongly recommended</span></div>
+      </div>
+    </section>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="page" id="page-contact">
+    <h1>Contact us</h1>
+    <p class="lede">Appointments are booked online once the season opens. Outside of booking, this is the best way to reach the coordinating team.</p>
+
+    <div class="two-col">
+      <section class="block">
+        <h2>Send a message</h2>
+        <form class="contact-form" onsubmit="return false;">
+          <div>
+            <label for="cf-name">Name</label>
+            <input id="cf-name" type="text" placeholder="Jane Doe">
+          </div>
+          <div>
+            <label for="cf-email">Email</label>
+            <input id="cf-email" type="email" placeholder="you@example.com">
+          </div>
+          <div>
+            <label for="cf-topic">What's this about?</label>
+            <select id="cf-topic">
+              <option>Booking an appointment</option>
+              <option>Volunteering</option>
+              <option>Property tax relief question</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div>
+            <label for="cf-msg">Message</label>
+            <textarea id="cf-msg" rows="4" placeholder="How can we help?"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Send message</button>
+          <p class="form-note">This form is a placeholder — wire it to your booking system or a real inbox before publishing. <span class="placeholder-tag">not live</span></p>
+        </form>
+      </section>
+
+      <section class="block">
+        <h2>Direct contact <span class="placeholder-tag">placeholder</span></h2>
+        <p><strong>Phone:</strong> (000) 000-0000</p>
+        <p><strong>Email:</strong> info@example.org</p>
+        <p><strong>Mailing address:</strong><br>123 Community Way<br>Wilmington, NC 28401</p>
+        <p style="color: var(--ink-soft); font-size: 0.88rem;">Replace these with your organization's real details — they're left as placeholders so nothing incorrect gets published by mistake.</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- CONTACT SIMPLE -->
+  <section class="page" id="page-contact-simple">
+    <h1>Contact Us</h1>
+    <p class="lede" style="margin-top: 24px;">
+      If you wish to contact Cape Fear Tax Aide, please contact us at: 
+      <a href="mailto:capefeartaxaide@gmail.com">capefeartaxaide@gmail.com</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div>© <span id="year"></span> Cape Fear Tax Aide. Volunteer-run, donor-funded, and independent of any tax-preparation company.</div>
+    <div><a href="#" onclick="return false;">Privacy &amp; terms</a> <span class="placeholder-tag">link TBD</span></div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var buttons = document.querySelectorAll('#tabnav button');
+    var pages = document.querySelectorAll('.page');
+
+    function showPage(name, focusTab) {
+      pages.forEach(function(p) {
+        p.classList.toggle('active', p.id === 'page-' + name);
+      });
+      buttons.forEach(function(b) {
+        b.setAttribute('aria-selected', b.dataset.page === name ? 'true' : 'false');
+      });
+      if (location.hash.slice(1) !== name) {
+        history.replaceState(null, '', '#' + name);
+      }
+      window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    }
+
+    buttons.forEach(function(b) {
+      b.addEventListener('click', function() { showPage(b.dataset.page); });
+    });
+
+    document.querySelectorAll('[data-page-link]').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        showPage(a.dataset.pageLink);
+      });
+    });
+
+    window.addEventListener('hashchange', function() {
+      var name = location.hash.slice(1) || 'home';
+      if (document.getElementById('page-' + name)) showPage(name);
+    });
+
+    var initial = location.hash.slice(1);
+    if (initial && document.getElementById('page-' + initial)) {
+      showPage(initial);
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* Interactive Time Slot Picker for Booking Form */
+    var timeSlotBtns = document.querySelectorAll('.time-slot-btn');
+    timeSlotBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        timeSlotBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
